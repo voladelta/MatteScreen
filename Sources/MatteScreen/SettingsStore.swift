@@ -2,7 +2,8 @@ import Foundation
 
 @MainActor
 final class SettingsStore {
-    private static let configurationKey = "overlayConfiguration.v3"
+    private static let configurationKey = "overlayConfiguration.v4"
+    private static let legacyV3ConfigurationKey = "overlayConfiguration.v3"
     private static let legacyV2ConfigurationKey = "overlayConfiguration.v2"
     private static let legacyV1ConfigurationKey = "overlayConfiguration.v1"
 
@@ -43,25 +44,35 @@ final class SettingsStore {
         }
 
         if
+            let data = defaults.data(forKey: legacyV3ConfigurationKey),
+            let legacy = try? JSONDecoder().decode(OverlayConfiguration.self, from: data)
+        {
+            return (replacingLegacySubtle(in: legacy).normalized(), true)
+        }
+
+        if
             let data = defaults.data(forKey: legacyV2ConfigurationKey),
             let legacy = try? JSONDecoder().decode(LegacyOverlayConfiguration.self, from: data)
         {
-            return (legacy.migrated(migrateStrength: false).normalized(), true)
+            let migrated = legacy.migrated()
+            return (replacingLegacySubtle(in: migrated).normalized(), true)
         }
 
         if
             let data = defaults.data(forKey: legacyV1ConfigurationKey),
             let legacy = try? JSONDecoder().decode(LegacyOverlayConfiguration.self, from: data)
         {
-            return (legacy.migrated(migrateStrength: true).normalized(), true)
+            var migrated = legacy.migrated()
+            migrated.strength = migratedStrength(migrated.strength)
+            return (migrated.normalized(), true)
         }
 
         return (.default, false)
     }
 
-    fileprivate static func migratedStrength(_ legacyStrength: Float) -> Float {
+    private static func migratedStrength(_ legacyStrength: Float) -> Float {
         let legacyLevels: [(old: Float, new: Float)] = [
-            (0.025, 0.05),
+            (0.025, 0.08),
             (0.045, 0.10),
             (0.07, 0.18),
             (0.10, 0.28)
@@ -70,6 +81,18 @@ final class SettingsStore {
         return legacyLevels.first {
             abs($0.old - legacyStrength) < 0.001
         }?.new ?? legacyStrength
+    }
+
+    private static func replacingLegacySubtle(
+        in configuration: OverlayConfiguration
+    ) -> OverlayConfiguration {
+        guard abs(configuration.strength - 0.05) < 0.001 else {
+            return configuration
+        }
+
+        var migrated = configuration
+        migrated.strength = 0.08
+        return migrated
     }
 
     private func persist(_ configuration: OverlayConfiguration) {
@@ -103,14 +126,11 @@ private struct LegacyOverlayConfiguration: Codable {
     var scale: Float
     var disabledDisplayIDs: Set<UInt32>
 
-    @MainActor
-    func migrated(migrateStrength: Bool) -> OverlayConfiguration {
+    func migrated() -> OverlayConfiguration {
         OverlayConfiguration(
             isEnabled: isEnabled,
             preset: preset.migrated,
-            strength: migrateStrength
-                ? SettingsStore.migratedStrength(strength)
-                : strength,
+            strength: strength,
             scale: scale,
             disabledDisplayIDs: disabledDisplayIDs
         )

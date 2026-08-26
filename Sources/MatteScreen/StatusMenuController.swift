@@ -50,7 +50,7 @@ final class StatusMenuController: NSObject {
         ))
 
         let strengths: [(String, Float)] = [
-            ("Subtle — 5%", 0.05),
+            ("Subtle — 8%", 0.08),
             ("Balanced — 10%", 0.10),
             ("Strong — 18%", 0.18),
             ("Maximum — 28%", 0.28)

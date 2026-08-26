@@ -17,11 +17,7 @@ enum ShaderSource {
         float mediumWeight;
         float fineWeight;
 
-        float4 tintAndWeave;
-
-        float fiberScale;
-        uint seed;
-        float2 padding;
+        float3 tint;
     };
 
     vertex VertexOut paperVertex(uint vertexID [[vertex_id]]) {
@@ -84,9 +80,10 @@ enum ShaderSource {
             pixel / tileSize
         ).r;
 
-        float broad = valueNoise(point * 0.015, parameters.seed);
-        float medium = valueNoise(point * 0.075, parameters.seed + 17);
-        float fine = valueNoise(point * 0.45, parameters.seed + 41);
+        const uint seed = 0x5EEDCAFEu;
+        float broad = valueNoise(point * 0.015, seed);
+        float medium = valueNoise(point * 0.075, seed + 17);
+        float fine = valueNoise(point * 0.45, seed + 41);
 
         float formation =
             broad * parameters.broadWeight +
@@ -95,13 +92,6 @@ enum ShaderSource {
 
         float detail = (paper - 0.5) * 2.0;
         detail += (formation - 0.5) * parameters.broadWeight * 0.18;
-
-        float weaveAmount = parameters.tintAndWeave.w;
-        if (weaveAmount > 0.0) {
-            float horizontal = sin(pixel.y * parameters.fiberScale);
-            float vertical = sin(pixel.x * parameters.fiberScale * 0.92);
-            detail += horizontal * vertical * weaveAmount;
-        }
 
         detail = clamp(detail, -1.0, 1.0);
 
@@ -117,7 +107,7 @@ enum ShaderSource {
             0.18
         );
 
-        float3 paperTint = parameters.tintAndWeave.xyz;
+        float3 paperTint = parameters.tint;
         float3 lightTone = mix(paperTint, float3(0.94), 0.68);
         float3 darkTone = mix(paperTint, float3(0.06), 0.55);
         float3 grainTone = detail >= 0.0 ? lightTone : darkTone;

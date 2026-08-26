@@ -3,7 +3,6 @@ import CoreGraphics
 
 @MainActor
 final class OverlayPanel: NSPanel {
-    let displayID: CGDirectDisplayID
     private let metalView: TransparentMetalView
     private let renderer: MetalRenderer
 
@@ -12,7 +11,6 @@ final class OverlayPanel: NSPanel {
 
     init(
         screen: NSScreen,
-        displayID: CGDirectDisplayID,
         metalContext: MetalContext,
         configuration: OverlayConfiguration
     ) {
@@ -26,8 +24,6 @@ final class OverlayPanel: NSPanel {
             configuration: configuration,
             screen: screen
         )
-        self.displayID = displayID
-
         super.init(
             contentRect: screen.frame,
             styleMask: [.borderless, .nonactivatingPanel],

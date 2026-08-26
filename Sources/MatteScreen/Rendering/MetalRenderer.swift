@@ -13,11 +13,7 @@ struct GPUParameters {
     var mediumWeight: Float
     var fineWeight: Float
 
-    var tintAndWeave: SIMD4<Float>
-
-    var fiberScale: Float
-    var seed: UInt32
-    var padding: SIMD2<Float> = .zero
+    var tint: SIMD3<Float>
 }
 
 @MainActor
@@ -69,7 +65,7 @@ final class MetalRenderer: NSObject, MTKViewDelegate {
         view.setNeedsDisplay(view.bounds)
     }
 
-    func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
+    func mtkView(_: MTKView, drawableSizeWillChange _: CGSize) {
         requestDraw()
     }
 
@@ -116,14 +112,7 @@ final class MetalRenderer: NSObject, MTKViewDelegate {
             broadWeight: preset.broadWeight,
             mediumWeight: preset.mediumWeight,
             fineWeight: preset.fineWeight,
-            tintAndWeave: SIMD4(
-                preset.tint.x,
-                preset.tint.y,
-                preset.tint.z,
-                preset.weaveAmount
-            ),
-            fiberScale: preset.fiberScale,
-            seed: 0x5EED_CAFE
+            tint: preset.tint
         )
     }
 }

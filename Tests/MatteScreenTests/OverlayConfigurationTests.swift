@@ -35,7 +35,7 @@ struct OverlayConfigurationTests {
 
     @Test("Swift parameters match the Metal buffer stride")
     func metalParameterStride() {
-        #expect(MemoryLayout<GPUParameters>.stride == 64)
+        #expect(MemoryLayout<GPUParameters>.stride == 48)
     }
 
     @Test("All authored paper textures are packaged")
@@ -69,6 +69,28 @@ struct OverlayConfigurationTests {
         #expect(restored.strength == 0.07)
         #expect(restored.scale == 6)
         #expect(restored.disabledDisplayIDs == [42])
+    }
+
+    @MainActor
+    @Test("The previous subtle setting migrates to eight percent")
+    func subtleStrengthMigration() throws {
+        let suiteName = "MatteScreenTests.\(UUID().uuidString)"
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        var legacy = OverlayConfiguration.default
+        legacy.strength = 0.05
+        defaults.set(
+            try JSONEncoder().encode(legacy),
+            forKey: "overlayConfiguration.v3"
+        )
+
+        let migrated = SettingsStore(defaults: defaults).configuration
+        defaults.removeObject(forKey: "overlayConfiguration.v3")
+        let restored = SettingsStore(defaults: defaults).configuration
+
+        #expect(migrated.strength == 0.08)
+        #expect(restored == migrated)
     }
 
     @MainActor

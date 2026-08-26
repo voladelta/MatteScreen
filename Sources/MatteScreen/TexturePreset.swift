@@ -47,9 +47,7 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
                 grainAmount: 0.18,
                 broadWeight: 0.20,
                 mediumWeight: 0.35,
-                fineWeight: 0.45,
-                weaveAmount: 0,
-                fiberScale: 1
+                fineWeight: 0.45
             )
         case .whisperWeave:
             PresetParameters(
@@ -57,9 +55,7 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
                 grainAmount: 0.12,
                 broadWeight: 0.10,
                 mediumWeight: 0.30,
-                fineWeight: 0.60,
-                weaveAmount: 0,
-                fiberScale: 1
+                fineWeight: 0.60
             )
         case .sunbakedParchment:
             PresetParameters(
@@ -67,9 +63,7 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
                 grainAmount: 0.23,
                 broadWeight: 0.45,
                 mediumWeight: 0.35,
-                fineWeight: 0.20,
-                weaveAmount: 0,
-                fiberScale: 1
+                fineWeight: 0.20
             )
         case .saddleLinen:
             PresetParameters(
@@ -77,9 +71,7 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
                 grainAmount: 0.14,
                 broadWeight: 0.20,
                 mediumWeight: 0.40,
-                fineWeight: 0.40,
-                weaveAmount: 0,
-                fiberScale: 1
+                fineWeight: 0.40
             )
         case .paintersPress:
             PresetParameters(
@@ -87,9 +79,7 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
                 grainAmount: 0.22,
                 broadWeight: 0.35,
                 mediumWeight: 0.40,
-                fineWeight: 0.25,
-                weaveAmount: 0,
-                fiberScale: 1
+                fineWeight: 0.25
             )
         case .mulberryVeil:
             PresetParameters(
@@ -97,9 +87,7 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
                 grainAmount: 0.18,
                 broadWeight: 0.35,
                 mediumWeight: 0.35,
-                fineWeight: 0.30,
-                weaveAmount: 0,
-                fiberScale: 1
+                fineWeight: 0.30
             )
         case .vellumMist:
             PresetParameters(
@@ -107,9 +95,7 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
                 grainAmount: 0.17,
                 broadWeight: 0.62,
                 mediumWeight: 0.28,
-                fineWeight: 0.10,
-                weaveAmount: 0,
-                fiberScale: 1
+                fineWeight: 0.10
             )
         case .monasticFelt:
             PresetParameters(
@@ -117,9 +103,7 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
                 grainAmount: 0.18,
                 broadWeight: 0.25,
                 mediumWeight: 0.45,
-                fineWeight: 0.30,
-                weaveAmount: 0,
-                fiberScale: 1
+                fineWeight: 0.30
             )
         case .carbonLedger:
             PresetParameters(
@@ -127,20 +111,16 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
                 grainAmount: 0.18,
                 broadWeight: 0.10,
                 mediumWeight: 0.25,
-                fineWeight: 0.65,
-                weaveAmount: 0,
-                fiberScale: 1
+                fineWeight: 0.65
             )
         }
     }
 }
 
-struct PresetParameters: Equatable, Sendable {
+struct PresetParameters {
     let tint: SIMD3<Float>
     let grainAmount: Float
     let broadWeight: Float
     let mediumWeight: Float
     let fineWeight: Float
-    let weaveAmount: Float
-    let fiberScale: Float
 }

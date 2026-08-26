@@ -57,9 +57,7 @@ final class DisplayCoordinator {
             overlays.removeValue(forKey: id)?.close()
         }
 
-        for id in desiredIDs {
-            guard let screen = screensByID[id] else { continue }
-
+        for (id, screen) in screensByID where desiredIDs.contains(id) {
             if let overlay = overlays[id] {
                 overlay.apply(configuration, screen: screen)
                 overlay.show()
@@ -68,7 +66,6 @@ final class DisplayCoordinator {
 
             let overlay = OverlayPanel(
                 screen: screen,
-                displayID: id,
                 metalContext: metalContext,
                 configuration: configuration
             )

@@ -7,7 +7,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var displayCoordinator: DisplayCoordinator?
     private var statusMenuController: StatusMenuController?
 
-    func applicationDidFinishLaunching(_ notification: Notification) {
+    func applicationDidFinishLaunching(_: Notification) {
         guard let device = MTLCreateSystemDefaultDevice() else {
             let alert = NSAlert()
             alert.messageText = "MatteScreen requires Metal"
