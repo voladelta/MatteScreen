@@ -16,6 +16,8 @@ rm -rf "$app_dir"
 mkdir -p "$binary_dir" "$resources_dir"
 cp "$binary_path" "$binary_dir/MatteScreen"
 cp "$project_dir/App/Info.plist" "$contents_dir/Info.plist"
+cp "$project_dir/App/MatteScreen.icns" "$resources_dir/MatteScreen.icns"
+cp "$project_dir/App/MatteScreen.png" "$resources_dir/MatteScreen.png"
 for texture in "$project_dir"/Sources/MatteScreen/Resources/*.png; do
     cp "$texture" "$resources_dir/"
 done

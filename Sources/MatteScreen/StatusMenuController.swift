@@ -14,11 +14,20 @@ final class StatusMenuController: NSObject {
 
     func start() {
         if let button = statusItem.button {
-            button.image = NSImage(
-                systemSymbolName: "circle.hexagongrid.fill",
-                accessibilityDescription: "MatteScreen"
-            )
-            button.image?.isTemplate = true
+            guard let icon = NSImage(
+                byReferencingFile: (
+                    Bundle.main.path(forResource: "MatteScreen", ofType: "png")
+                        ?? Bundle.module.path(forResource: "MatteScreen", ofType: "png")
+                        ?? ""
+                )
+            ) else {
+                refresh()
+                return
+            }
+            icon.size = NSSize(width: 18, height: 18)
+            icon.isTemplate = false
+            button.image = icon
+            button.image?.accessibilityDescription = "MatteScreen"
         }
         refresh()
     }
