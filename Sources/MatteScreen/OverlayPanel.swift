@@ -48,15 +48,19 @@ final class OverlayPanel: NSPanel {
 
         metalView.autoresizingMask = [.width, .height]
         contentView = metalView
-        renderer.requestDraw()
     }
 
     func apply(_ configuration: OverlayConfiguration, screen: NSScreen) {
-        setFrame(screen.frame, display: false)
+        if frame != screen.frame {
+            setFrame(screen.frame, display: false)
+        }
+
         renderer.apply(configuration, screen: screen)
     }
 
     func show() {
+        guard !isVisible else { return }
+
         orderFrontRegardless()
         renderer.requestDraw()
     }

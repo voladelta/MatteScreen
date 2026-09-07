@@ -41,7 +41,7 @@ final class DisplayCoordinator {
     }
 
     private func reconcileDisplays() {
-        guard configuration.isEnabled else {
+        guard configuration.isEnabled, configuration.strength > 0 else {
             removeAllOverlays()
             return
         }

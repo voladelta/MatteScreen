@@ -3,7 +3,7 @@ import Metal
 import MetalKit
 import simd
 
-struct GPUParameters {
+struct GPUParameters: Equatable {
     var screenOriginPixels: SIMD2<Float>
     var scale: Float
     var strength: Float
@@ -55,8 +55,12 @@ final class MetalRenderer: NSObject, MTKViewDelegate {
     }
 
     func apply(_ configuration: OverlayConfiguration, screen: NSScreen) {
-        paperTexture = metalContext.paperTexture(for: configuration.preset)
-        parameters = Self.makeParameters(configuration: configuration, screen: screen)
+        let nextTexture = metalContext.paperTexture(for: configuration.preset)
+        let nextParameters = Self.makeParameters(configuration: configuration, screen: screen)
+        guard nextTexture !== paperTexture || nextParameters != parameters else { return }
+
+        paperTexture = nextTexture
+        parameters = nextParameters
         requestDraw()
     }
 

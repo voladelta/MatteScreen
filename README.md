@@ -42,6 +42,8 @@ Settings persist in `UserDefaults`.
 
 `DisplayCoordinator` owns one `OverlayPanel` per active display. Each panel ignores mouse events and joins all Spaces. A paused `MTKView` renders one full-screen triangle when settings or display parameters change. There is no frame timer while the surface is static.
 
+Unchanged render parameters do not request another frame, and already-visible panels are not reordered during display reconciliation. Setting strength to zero removes the overlay windows until strength increases again. Texture resolution and shader output are unchanged by these optimizations. A visible translucent overlay still requires macOS to composite it over changing content in other applications.
+
 The renderer samples an authored grayscale paper scan with repeated Metal texture addressing. The fragment shader combines a neutral contrast veil with separate light and dark paper grain.
 
 The shader produces premultiplied translucent color. Core Animation then composites the surface over other applications. Metal does not read pixels from other windows, so MatteScreen does not need Screen Recording or Accessibility permission.
