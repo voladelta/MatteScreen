@@ -1,5 +1,53 @@
 # Texture assets
 
+## Calm texture collection
+
+`SoftCotton.png`, `QuietWashi.png`, `FineCeramic.png`, and `BrushedChalk.png` in `Sources/MatteScreen/Resources` were generated separately with the built-in OpenAI image-generation tool and selected from previews. ImageMagick converted each image to grayscale, resized it to 1024 × 1024, and shifted its mean to 50% without stretching contrast. Runtime presets use restrained grain and minimal broad noise. Seamless edges were requested during generation; exact seamlessness is not guaranteed.
+
+Each generation used this shared prompt, substituting the name and surface description below:
+
+```text
+Use case: stylized-concept
+Asset type: preview-only seamless material texture for a subtle macOS full-screen reading overlay.
+Primary request: Generate one square texture tile named {name}. {surface description}
+Composition: flat orthographic material scan, edge to edge, uniform fine detail density, no scene or objects. A single texture image, not a comparison board.
+Color: strictly neutral grayscale around middle gray, very low tonal contrast. Keep fine texture gently visible for preview, visually quiet and softly blended.
+Lighting: entirely even, no directional shading or gradients. Texture through subtle local tonal variation only.
+Constraints: aim for seamless matching opposite edges. No broad cloudy patches, mottling, isolated dark or bright marks, sharp speckles, coarse grain, repeating geometric patterns, grid, relief, shadows, highlights, vignette, borders, text, labels, watermark. Intended to be barely perceptible behind text and gently visible in blank areas. Generate image only.
+```
+
+### SoftCotton.png
+
+Name: Soft Cotton
+
+```text
+Smooth finely milled cotton paper, tiny softly blended irregular micrograin, occasional barely visible short fibers. Non-directional, refined and soft.
+```
+
+### QuietWashi.png
+
+Name: Quiet Washi
+
+```text
+Smooth Japanese handmade paper with sparse faint organic fibers, delicate short wisps dispersed irregularly. Restrained, elegant, no dominant long strands or tangled clusters.
+```
+
+### FineCeramic.png
+
+Name: Fine Ceramic
+
+```text
+Smooth unglazed matte ceramic with extremely fine shallow irregular micrograin, silky powdery finish, understated tiny pores. No cracks, glaze, gloss, or deep pits.
+```
+
+### BrushedChalk.png
+
+Name: Brushed Chalk
+
+```text
+Smooth matte chalk surface with extremely faint soft broken strokes in a loose horizontal flow. Restrained irregular stroke lengths, feathered tonal edges, no distinct stripes or strong brush marks.
+```
+
 ## ClassicMatte.png
 
 `Sources/MatteScreen/Resources/ClassicMatte.png` was generated with the built-in OpenAI image-generation tool, then converted to a neutral 1024 × 1024 grayscale texture for Metal sampling.

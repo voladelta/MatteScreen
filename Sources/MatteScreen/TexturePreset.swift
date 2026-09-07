@@ -10,6 +10,10 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
     case vellumMist
     case monasticFelt
     case carbonLedger
+    case softCotton
+    case quietWashi
+    case fineCeramic
+    case brushedChalk
 
     var title: String {
         switch self {
@@ -22,6 +26,10 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
         case .vellumMist: "Vellum Mist"
         case .monasticFelt: "Monastic Felt"
         case .carbonLedger: "Carbon Ledger"
+        case .softCotton: "Soft Cotton"
+        case .quietWashi: "Quiet Washi"
+        case .fineCeramic: "Fine Ceramic"
+        case .brushedChalk: "Brushed Chalk"
         }
     }
 
@@ -36,6 +44,10 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
         case .vellumMist: "VellumMist"
         case .monasticFelt: "MonasticFelt"
         case .carbonLedger: "CarbonLedger"
+        case .softCotton: "SoftCotton"
+        case .quietWashi: "QuietWashi"
+        case .fineCeramic: "FineCeramic"
+        case .brushedChalk: "BrushedChalk"
         }
     }
 
@@ -112,6 +124,38 @@ enum TexturePreset: String, CaseIterable, Codable, Sendable {
                 broadWeight: 0.10,
                 mediumWeight: 0.25,
                 fineWeight: 0.65
+            )
+        case .softCotton:
+            PresetParameters(
+                tint: SIMD3(0.54, 0.53, 0.50),
+                grainAmount: 0.10,
+                broadWeight: 0.05,
+                mediumWeight: 0.25,
+                fineWeight: 0.70
+            )
+        case .quietWashi:
+            PresetParameters(
+                tint: SIMD3(0.56, 0.54, 0.50),
+                grainAmount: 0.10,
+                broadWeight: 0.05,
+                mediumWeight: 0.35,
+                fineWeight: 0.60
+            )
+        case .fineCeramic:
+            PresetParameters(
+                tint: SIMD3(0.52, 0.52, 0.51),
+                grainAmount: 0.08,
+                broadWeight: 0.02,
+                mediumWeight: 0.18,
+                fineWeight: 0.80
+            )
+        case .brushedChalk:
+            PresetParameters(
+                tint: SIMD3(0.55, 0.54, 0.52),
+                grainAmount: 0.10,
+                broadWeight: 0.05,
+                mediumWeight: 0.40,
+                fineWeight: 0.55
             )
         }
     }

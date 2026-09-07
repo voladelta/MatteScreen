@@ -40,7 +40,7 @@ struct OverlayConfigurationTests {
 
     @Test("All authored paper textures are packaged")
     func paperTexturesArePackaged() {
-        #expect(TexturePreset.allCases.count == 9)
+        #expect(TexturePreset.allCases.count == 13)
         for preset in TexturePreset.allCases {
             #expect(PaperTextureResource.locate(preset) != nil)
         }

@@ -31,7 +31,7 @@ The build script creates an ad-hoc signed app at `build/MatteScreen.app`. The ap
 Use the menu-bar icon to:
 
 - enable or disable the surface;
-- select one of nine authored textures;
+- select one of thirteen authored textures;
 - select texture strength and grain size;
 - enable or disable individual displays;
 - quit the app.
